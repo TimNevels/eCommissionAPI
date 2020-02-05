@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: Check Zip
+  version: '1.0'
+  contact:
+    name: Tim Nevels
+    email: timnevels@mac.com
+  description: Check that a zip code is valid and return info about the zip code
+servers:
+  - url: 'http://10.0.1.18:8080'
+paths:
+  /api/checkzip:
+    get:
+      summary: checkzip
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  found:
+                    type: boolean
+                    description: Returns TRUE if valid zip
+                  zip:
+                    type: string
+                    description: Zip code
+                  city:
+                    type: string
+                    description: City name
+                  state:
+                    type: string
+                    description: 2 character state code
+                  county:
+                    type: string
+                    description: County name
+                  latitude:
+                    type: number
+                    description: Latitude of center of zip code
+                  longitude:
+                    type: number
+                    description: Longitude of center of zip code
+              examples:
+                Valid Zipcode Example:
+                  value:
+                    found: true
+                    zip: '66049'
+                    city: Lawrence
+                    state: KS
+                    county: Douglas
+                    latitude: 123.456
+                    longitude: 443.789
+      operationId: get-api-checkzip
+      description: Check for valid zip code and return info about the zip code
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: zipcode
+          required: true
+      security: []
+  /api/contractStatus: {}
+components:
+  schemas: {}
+  securitySchemes:
+    'Bearer ':
+      name: Authorization
+      type: apiKey
+      in: header
